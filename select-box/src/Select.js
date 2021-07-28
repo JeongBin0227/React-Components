@@ -7,11 +7,32 @@ const options = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: "1px dotted pink",
+    color: state.isSelected ? "red" : "blue",
+    padding: 20,
+  }),
+  control: () => ({
+    // none of react-select's styles are passed to <Control />
+    width: 100,
+    // background: "green",
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
+
 export const MyComponent = () => {
   return (
     <div>
       <div className="category">Default Select</div>
-      <Select style={{ width: "100px" }} options={options} />
+      {/* <Select styles={customStyles} options={options} /> */}
+      <Select options={options} />
       <div className="category">Loading Select</div>
       <Select options={options} isLoading />
       <div className="category">Clearable Select</div>
