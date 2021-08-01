@@ -59,27 +59,50 @@ export const MyModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { open, close, header } = props;
 
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    <div className={open ? "openModal modal" : "modal"}>
-      {open ? (
-        <section>
-          <header>
-            {header}
-            <button className="close" onClick={close}>
-              {" "}
-              &times;{" "}
-            </button>
-          </header>
-          <main>{props.children}</main>
-          <footer>
-            <button className="close" onClick={close}>
-              {" "}
-              close{" "}
-            </button>
-          </footer>
-        </section>
-      ) : null}
-    </div>
+    <Modal
+      isOpen={open}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Example Modal"
+    >
+      {/* <div className={open ? "openModal modal" : "modal"}> */}
+      {/* {open ? ( */}
+      <section>
+        <header>
+          {header}
+          <button className="close" onClick={close}>
+            {" "}
+            &times;{" "}
+          </button>
+        </header>
+        <main>{props.children}</main>
+        <footer>
+          <button className="close" onClick={close}>
+            {" "}
+            close{" "}
+          </button>
+        </footer>
+      </section>
+      {/* ) : null} */}
+      {/* </div> */}
+    </Modal>
   );
 };
