@@ -13,8 +13,9 @@ const customStyles = {
   },
 };
 
-export const MyComponent = () => {
+export const MyComponent = (props) => {
   let subtitle;
+  const { open, close, header, footer } = props;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -40,16 +41,28 @@ export const MyComponent = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
+        <header>
+          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>{header}</h2>
+          <button className="close" onClick={closeModal}>
+            {" "}
+            &times;{" "}
+          </button>
+        </header>
+        <main>{props.children}</main>
+        <footer>
+          {footer}
+          <button className="close" onClick={closeModal}>
+            {" "}
+            close{" "}
+          </button>
+        </footer>
+        {/* <form>
           <input />
           <button>tab navigation</button>
           <button>stays</button>
           <button>inside</button>
           <button>the modal</button>
-        </form>
+        </form> */}
       </Modal>
     </div>
   );
